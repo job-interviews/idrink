@@ -1,6 +1,8 @@
 package com.nmp90.idrink.mvp.bars;
 
-import com.nmp90.idrink.api.models.Bars;
+import android.location.Location;
+
+import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.mvp.BaseContract;
 
 import java.util.List;
@@ -12,13 +14,13 @@ import java.util.List;
 public interface BarsContract {
 
     interface View extends BaseContract.BaseView<Presenter> {
-        void displayBars(List<Bars> bars);
+        void displayBars(List<Bar> bars);
         void requestLocationPermissionFromUser();
     }
 
     interface Presenter extends BaseContract.BasePresenter {
         void loadBars();
-        void getLocation();
+        Location getLocation();
         void locationApproved();
         void locationDeclined();
     }

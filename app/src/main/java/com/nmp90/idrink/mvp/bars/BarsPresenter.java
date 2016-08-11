@@ -13,11 +13,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.nmp90.idrink.api.Api;
+import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.api.models.LatLng;
 import com.nmp90.idrink.mvp.BasePresenter;
 import com.nmp90.idrink.utils.Constants;
+import com.nmp90.idrink.utils.LocationUtils;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -74,7 +77,19 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(bars -> {
-                        Timber.d(bars.toString());
+                        if(view.isActive()) {
+                            List<Bar> results = bars.getResults();
+                            for (int i = 0; i < results.size(); i++) {
+                                Bar bar = results.get(i);
+                                double barLat = bar.getGeometry().getLocation().getLat();
+                                double barLng = bar.getGeometry().getLocation().getLng();
+
+                                results.get(i).setDistance(LocationUtils.getDistanceFromLatLonInKm(
+                                        barLat, barLng, currentLocation.getLatitude(), currentLocation.getLongitude()
+                                ));
+                            }
+                            view.displayBars(results);
+                        }
                     }, err -> {
                         Timber.e("Error loading bars", err);
                     });
@@ -82,18 +97,19 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
     }
 
     @Override
-    public void getLocation() {
+    public Location getLocation() {
         if (!isLocationGranted()) {
             Timber.d("Permission not allowed!");
             view.requestLocationPermissionFromUser();
-            return;
+            return null;
         }
 
-            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
         if (lastLocation != null) {
-            Timber.d("onConnected: " + lastLocation);
             currentLocation = lastLocation;
         }
+
+        return currentLocation;
     }
 
     @Override

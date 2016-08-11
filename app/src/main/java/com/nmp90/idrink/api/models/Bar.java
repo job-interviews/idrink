@@ -9,8 +9,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Bar {
     private String name;
+    private Geometry geometry;
+    private double distance;
 
     public String getName() {
         return name;
+    }
+
+    public Geometry getGeometry() {
+        return geometry;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 }

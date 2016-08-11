@@ -11,6 +11,7 @@ public interface BaseContract {
     }
 
     interface BaseView<T> {
+        boolean isActive();
         void setPresenter(T presenter);
     }
 }

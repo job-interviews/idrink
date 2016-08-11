@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 
 import com.nmp90.idrink.R;
-import com.nmp90.idrink.api.models.Bars;
+import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.di.bars.BarsModule;
 import com.nmp90.idrink.mvp.bars.BarsContract;
 
@@ -44,8 +44,13 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
     }
 
     @Override
-    public void displayBars(List<Bars> barses) {
-        Timber.d("Meetings " + barses.size());
+    public void displayBars(List<Bar> bars) {
+        Timber.d("Meetings " + bars.size());
+
+        for (int i = 0; i < bars.size(); i++) {
+            double d = bars.get(i).getDistance();
+            Timber.d(d + "");
+        }
     }
 
     @Override
@@ -84,6 +89,11 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
             // other 'case' lines to check for other
             // permissions this app might request
         }
+    }
+
+    @Override
+    public boolean isActive() {
+        return !isFinishing();
     }
 
     @Override
