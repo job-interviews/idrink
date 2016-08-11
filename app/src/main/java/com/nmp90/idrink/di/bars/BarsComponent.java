@@ -9,6 +9,6 @@ import dagger.Subcomponent;
  */
 
 @Subcomponent(modules = {BarsModule.class})
-public interface BarsCompoonent {
+public interface BarsComponent {
     void inject(MainActivity activity);
 }
