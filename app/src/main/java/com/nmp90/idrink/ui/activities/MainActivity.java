@@ -4,17 +4,23 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.view.ViewPager;
 
 import com.nmp90.idrink.R;
 import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.di.bars.BarsModule;
 import com.nmp90.idrink.mvp.bars.BarsContract;
+import com.nmp90.idrink.ui.adapters.MainPagerAdapter;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements BarsContract.View {
@@ -23,10 +29,25 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
     @Inject
     BarsContract.Presenter presenter;
 
+    @BindView(R.id.tab_layout_main)
+    TabLayout tabLayout;
+
+    @BindView(R.id.viewpager)
+    ViewPager viewPager;
+
+    private Unbinder unbinder;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        unbinder = ButterKnife.bind(this);
+
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this));
+
+        tabLayout.setupWithViewPager(viewPager);
+
         getApplicationComponent().plus(new BarsModule(this)).inject(this);
     }
 
@@ -41,6 +62,12 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
     protected void onStop() {
         presenter.stop();
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unbinder.unbind();
+        super.onDestroy();
     }
 
     @Override

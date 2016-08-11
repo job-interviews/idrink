@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">iDrink</string>
+    <string name="bar_list">Bar List</string>
+    <string name="map">Map</string>
 </resources>
