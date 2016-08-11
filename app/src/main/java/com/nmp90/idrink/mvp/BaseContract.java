@@ -6,6 +6,8 @@ package com.nmp90.idrink.mvp;
 
 public interface BaseContract {
     interface BasePresenter {
+        void start();
+        void stop();
     }
 
     interface BaseView<T> {

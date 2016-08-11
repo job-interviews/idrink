@@ -1,6 +1,6 @@
 package com.nmp90.idrink.di.app;
 
-import com.nmp90.idrink.di.bars.BarsCompoonent;
+import com.nmp90.idrink.di.bars.BarsComponent;
 import com.nmp90.idrink.di.bars.BarsModule;
 
 import javax.inject.Singleton;
@@ -14,5 +14,5 @@ import dagger.Component;
 @Singleton
 @Component(modules = {AppModule.class})
 public interface AppComponent {
-    BarsCompoonent plus(BarsModule module);
+    BarsComponent plus(BarsModule module);
 }

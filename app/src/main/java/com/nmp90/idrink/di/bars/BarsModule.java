@@ -1,5 +1,7 @@
 package com.nmp90.idrink.di.bars;
 
+import android.content.Context;
+
 import com.nmp90.idrink.api.Api;
 import com.nmp90.idrink.mvp.bars.BarsContract;
 import com.nmp90.idrink.mvp.bars.BarsPresenter;
@@ -24,7 +26,7 @@ public class BarsModule {
     }
 
     @Provides
-    public BarsContract.Presenter providesPresenter(Api tourmeetApi) {
-        return new BarsPresenter(tourmeetApi, view);
+    public BarsContract.Presenter providesPresenter(Context context, Api tourmeetApi) {
+        return new BarsPresenter(context, tourmeetApi, view);
     }
 }
