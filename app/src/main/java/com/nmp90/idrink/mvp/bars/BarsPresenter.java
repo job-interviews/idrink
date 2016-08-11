@@ -13,10 +13,16 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.nmp90.idrink.api.Api;
+import com.nmp90.idrink.api.models.LatLng;
 import com.nmp90.idrink.mvp.BasePresenter;
+import com.nmp90.idrink.utils.Constants;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import timber.log.Timber;
 
 /**
@@ -28,8 +34,10 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
 
     private final Context context;
     private Api iDrinkApi;
-    private BarsContract.View view;
     private GoogleApiClient googleApiClient;
+
+    private BarsContract.View view;
+    private Location currentLocation;
 
     @Inject
     public BarsPresenter(Context context, Api iDrinkApi, BarsContract.View view) {
@@ -61,7 +69,16 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
 
     @Override
     public void loadBars() {
-
+        if(currentLocation != null) {
+            iDrinkApi.getBars(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 500, "bar", Constants.KEY)
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(bars -> {
+                        Timber.d(bars.toString());
+                    }, err -> {
+                        Timber.e("Error loading bars", err);
+                    });
+        }
     }
 
     @Override
@@ -72,21 +89,27 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
             return;
         }
 
-        Location mLastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-        if (mLastLocation != null) {
-            Timber.d("onConnected: " + mLastLocation);
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+        if (lastLocation != null) {
+            Timber.d("onConnected: " + lastLocation);
+            currentLocation = lastLocation;
         }
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        if (!isLocationGranted()) {
-            Timber.d("Permission not allowed!");
-            view.requestLocationPermissionFromUser();
-            return;
-        }
-
+    public void locationApproved() {
         getLocation();
+    }
+
+    @Override
+    public void locationDeclined() {
+        // TODO: Load all bars available
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        getLocation();
+        loadBars();
     }
 
     private boolean isLocationGranted() {
@@ -96,11 +119,11 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
 
     @Override
     public void onConnectionSuspended(int i) {
-        Timber.d(i + "");
+        Timber.e("Connection Suspended!");
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Timber.d(connectionResult.getErrorMessage());
+        Timber.e("Connection Failed!" + connectionResult.getErrorMessage());
     }
 }

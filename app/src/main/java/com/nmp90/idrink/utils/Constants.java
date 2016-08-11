@@ -5,5 +5,6 @@ package com.nmp90.idrink.utils;
  */
 
 public class Constants {
-    public static final String MAPS_URL = "https://maps.googleapis.com/maps/api/";
+    public static final String MAPS_URL = "https://maps.googleapis.com/maps/api/place/";
+    public static final String KEY = "AIzaSyCvKpebK_Pvd75WRVIOdcZCtMTezmSwNeA";
 }

@@ -19,5 +19,7 @@ public interface BarsContract {
     interface Presenter extends BaseContract.BasePresenter {
         void loadBars();
         void getLocation();
+        void locationApproved();
+        void locationDeclined();
     }
 }

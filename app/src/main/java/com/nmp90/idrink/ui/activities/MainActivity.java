@@ -33,6 +33,7 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
     @Override
     protected void onStart() {
         presenter.start();
+        presenter.loadBars();
         super.onStart();
     }
 
@@ -73,11 +74,9 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    presenter.getLocation();
+                    presenter.locationApproved();
                 } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    presenter.locationDeclined();
                 }
                 return;
             }
