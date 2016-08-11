@@ -5,21 +5,18 @@ import com.nmp90.idrink.mvp.BasePresenter;
 
 import javax.inject.Inject;
 
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by joro on 05.08.16.
  */
 
 public class BarsPresenter extends BasePresenter<BarsContract.View> implements BarsContract.Presenter {
 
-    private Api tourMeetApi;
+    private Api iDrinkApi;
     private BarsContract.View view;
 
     @Inject
-    public BarsPresenter(Api tourMeetApi, BarsContract.View view) {
-        this.tourMeetApi = tourMeetApi;
+    public BarsPresenter(Api iDrinkApi, BarsContract.View view) {
+        this.iDrinkApi = iDrinkApi;
         this.view = view;
     }
 
@@ -30,11 +27,6 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
 
     @Override
     public void loadMeetings() {
-        tourMeetApi.getMeetings("").subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe(meetings -> {
-                        view.displayBars(meetings);
-                }, err -> {
 
-                });
     }
 }
