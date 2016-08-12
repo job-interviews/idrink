@@ -3,7 +3,6 @@ package com.nmp90.idrink.di.app;
 import android.content.Context;
 
 import com.nmp90.idrink.api.Api;
-import com.nmp90.idrink.api.iDrinkApi;
 
 import javax.inject.Singleton;
 
@@ -30,6 +29,6 @@ public class AppModule {
     @Provides
     @Singleton
     Api provideApi() {
-        return iDrinkApi.createGettiApiService();
+        return Api.Builder.createGettiApiService();
     }
 }
