@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.widget.Toast;
 
 import com.nmp90.idrink.di.HasComponent;
+import com.nmp90.idrink.di.app.AppComponent;
+import com.nmp90.idrink.iDrinkApplication;
 
 /**
  * Created by joro on 05.08.16.
@@ -26,6 +28,10 @@ public abstract class BaseFragment extends Fragment {
     @SuppressWarnings("unchecked")
     protected <C> C getComponent(Class<C> componentType) {
         return componentType.cast(((HasComponent<C>) getActivity()).getComponent());
+    }
+
+    protected AppComponent getAppComponent() {
+        return iDrinkApplication.getApplicationComponent();
     }
 
     public String getTitle() {

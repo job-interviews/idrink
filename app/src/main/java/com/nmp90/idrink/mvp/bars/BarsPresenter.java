@@ -73,12 +73,17 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
     @Override
     public void loadBars() {
         if(currentLocation != null) {
-            iDrinkApi.getBars(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 500, "bar", Constants.KEY)
+            iDrinkApi.getBars(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 5000, "bar", Constants.KEY)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(bars -> {
                         if(view.isActive()) {
                             List<Bar> results = bars.getResults();
+                            if (results == null || results.size() == 0) {
+                                view.displayNoBars();
+                                return;
+                            }
+
                             for (int i = 0; i < results.size(); i++) {
                                 Bar bar = results.get(i);
                                 double barLat = bar.getGeometry().getLocation().getLat();
@@ -93,13 +98,14 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
                     }, err -> {
                         Timber.e("Error loading bars", err);
                     });
+        } else {
+            // TODO: Load all locations
         }
     }
 
     @Override
     public Location getLocation() {
         if (!isLocationGranted()) {
-            Timber.d("Permission not allowed!");
             view.requestLocationPermissionFromUser();
             return null;
         }

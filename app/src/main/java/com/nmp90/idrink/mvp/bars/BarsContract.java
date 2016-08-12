@@ -15,6 +15,7 @@ public interface BarsContract {
 
     interface View extends BaseContract.BaseView<Presenter> {
         void displayBars(List<Bar> bars);
+        void displayNoBars();
         void requestLocationPermissionFromUser();
     }
 
