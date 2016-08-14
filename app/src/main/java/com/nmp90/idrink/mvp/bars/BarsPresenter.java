@@ -19,8 +19,9 @@ import com.nmp90.idrink.mvp.BasePresenter;
 import com.nmp90.idrink.utils.Constants;
 import com.nmp90.idrink.utils.LocationUtils;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Stream;
 
 import javax.inject.Inject;
 
@@ -84,15 +85,9 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
                                 return;
                             }
 
-                            for (int i = 0; i < results.size(); i++) {
-                                Bar bar = results.get(i);
-                                double barLat = bar.getGeometry().getLocation().getLat();
-                                double barLng = bar.getGeometry().getLocation().getLng();
+                            setDistanceForBars(results);
+                            sortBarsByClosest(results);
 
-                                results.get(i).setDistance(LocationUtils.getDistanceFromLatLonInKm(
-                                        barLat, barLng, currentLocation.getLatitude(), currentLocation.getLongitude()
-                                ));
-                            }
                             view.displayBars(results);
                         }
                     }, err -> {
@@ -101,6 +96,23 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
         } else {
             // TODO: Load all locations
         }
+    }
+
+    private void setDistanceForBars(List<Bar> results) {
+        for (int i = 0; i < results.size(); i++) {
+            Bar bar = results.get(i);
+            double barLat = bar.getGeometry().getLocation().getLat();
+            double barLng = bar.getGeometry().getLocation().getLng();
+
+            results.get(i).setDistance(LocationUtils.getDistanceFromLatLonInKm(
+                    barLat, barLng, currentLocation.getLatitude(), currentLocation.getLongitude()
+            ));
+        }
+    }
+
+    private void sortBarsByClosest(List<Bar> results) {
+        Collections.sort(results, (bar, t1) ->
+                bar.getDistance() < t1.getDistance() ? -1 : 1);
     }
 
     @Override

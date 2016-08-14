@@ -1,35 +1,26 @@
 package com.nmp90.idrink.ui.fragments;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.nmp90.idrink.R;
 import com.nmp90.idrink.api.models.Bar;
-import com.nmp90.idrink.di.bars.BarsModule;
-import com.nmp90.idrink.mvp.bars.BarsContract;
 import com.nmp90.idrink.utils.Constants;
 
 import org.parceler.Parcels;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import timber.log.Timber;
-
 /**
  * Created by joro on 11.08.16.
  */
 
-public class MapFragment extends BaseFragment {
+public class MapFragment extends BaseFragment implements OnMapReadyCallback {
     private List<Bar> bars;
 
     public static MapFragment newInstance(List<Bar> bars) {
@@ -51,5 +42,10 @@ public class MapFragment extends BaseFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_bars_list, container, false);
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
     }
 }

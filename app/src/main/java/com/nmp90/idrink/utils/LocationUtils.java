@@ -6,6 +6,7 @@ package com.nmp90.idrink.utils;
 
 public class LocationUtils {
     // Haversine formula
+    // Can be replaced with: Location.distanceBetween();
     public static double getDistanceFromLatLonInKm(double lat1, double lon1, double lat2, double lon2) {
         double earthRadius = 6371; // Radius of the earth in km
         double dLat = toRadian(lat2-lat1);  // toRadian below
