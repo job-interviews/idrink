@@ -37,6 +37,9 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     compile "com.google.dagger:dagger:$rootProject.daggerVersion"
 
+    compile 'org.parceler:parceler-api:1.1.5'
+    apt 'org.parceler:parceler:1.1.5'
+
     compile 'com.jakewharton.timber:timber:4.1.2'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
     compile 'com.squareup.retrofit2:converter-jackson:2.1.0'

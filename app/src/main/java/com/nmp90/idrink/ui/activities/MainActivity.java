@@ -14,8 +14,6 @@ import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.di.bars.BarsModule;
 import com.nmp90.idrink.mvp.bars.BarsContract;
 import com.nmp90.idrink.ui.adapters.MainPagerAdapter;
-import com.nmp90.idrink.ui.fragments.BarListFragment;
-import com.nmp90.idrink.ui.fragments.MapFragment;
 
 import java.util.List;
 
@@ -48,12 +46,8 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
         getApplicationComponent().plus(new BarsModule(this)).inject(this);
 
         unbinder = ButterKnife.bind(this);
-
         viewPager.setOffscreenPageLimit(2);
-        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this));
-
         tabLayout.setupWithViewPager(viewPager);
-
     }
 
     @Override
@@ -76,7 +70,7 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
 
     @Override
     public void displayBars(List<Bar> bars) {
-        Timber.d("Meetings " + bars.size());
+        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this, bars));
 
         for (int i = 0; i < bars.size(); i++) {
             double d = bars.get(i).getDistance();

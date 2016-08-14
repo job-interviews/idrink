@@ -15,6 +15,9 @@ import com.nmp90.idrink.R;
 import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.di.bars.BarsModule;
 import com.nmp90.idrink.mvp.bars.BarsContract;
+import com.nmp90.idrink.utils.Constants;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -27,14 +30,22 @@ import timber.log.Timber;
  */
 
 public class MapFragment extends BaseFragment {
-    public static MapFragment newInstance() {
+    private List<Bar> bars;
+
+    public static MapFragment newInstance(List<Bar> bars) {
         Bundle args = new Bundle();
+        args.putParcelable(Constants.KEY_BARS, Parcels.wrap(bars));
 
         MapFragment fragment = new MapFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.bars = Parcels.unwrap(getArguments().getParcelable(Constants.KEY_BARS));
+    }
 
     @Nullable
     @Override

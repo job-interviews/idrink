@@ -1,9 +1,12 @@
 package com.nmp90.idrink.api.models;
 
+import org.parceler.Parcel;
+
 /**
  * Created by joro on 11.08.16.
  */
 
+@Parcel
 public class LatLng {
     private double lat;
     private double lng;
