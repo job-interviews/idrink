@@ -14,6 +14,8 @@ import com.nmp90.idrink.api.models.Bar;
 import com.nmp90.idrink.di.bars.BarsModule;
 import com.nmp90.idrink.mvp.bars.BarsContract;
 import com.nmp90.idrink.ui.adapters.MainPagerAdapter;
+import com.nmp90.idrink.ui.fragments.BarListFragment;
+import com.nmp90.idrink.ui.fragments.BarMapFragment;
 
 import java.util.List;
 
@@ -22,7 +24,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements BarsContract.View {
 
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
     ViewPager viewPager;
 
     private Unbinder unbinder;
+    private MainPagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
 
         unbinder = ButterKnife.bind(this);
         viewPager.setOffscreenPageLimit(2);
+        pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), this);
+        viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
 
@@ -70,12 +74,10 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
 
     @Override
     public void displayBars(List<Bar> bars) {
-        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), this, bars));
-
-        for (int i = 0; i < bars.size(); i++) {
-            double d = bars.get(i).getDistance();
-            Timber.d(d + "");
-        }
+        BarListFragment barsListFragment = (BarListFragment) pagerAdapter.getRegisteredFragment(BarListFragment.POSITION);
+        BarMapFragment barMapFragment = (BarMapFragment) pagerAdapter.getRegisteredFragment(BarMapFragment.POSITION);
+        barsListFragment.setBars(bars);
+        barMapFragment.setBars(bars);
     }
 
     @Override

@@ -11,9 +11,13 @@ import org.parceler.Parcel;
 @Parcel
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Geometry {
-    private LatLng location;
+    LatLng location;
 
     public LatLng getLocation() {
         return location;
+    }
+
+    public com.google.android.gms.maps.model.LatLng getGoogleLocation() {
+        return new com.google.android.gms.maps.model.LatLng(location.getLat(), location.getLng());
     }
 }

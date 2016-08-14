@@ -8,8 +8,8 @@ import org.parceler.Parcel;
 
 @Parcel
 public class LatLng {
-    private double lat;
-    private double lng;
+    double lat;
+    double lng;
 
     public LatLng() {}
 
