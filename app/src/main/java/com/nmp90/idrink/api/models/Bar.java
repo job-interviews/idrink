@@ -12,6 +12,7 @@ import org.parceler.Parcel;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Bar {
     private String name;
+    private String vicinity;
     private Geometry geometry;
     private double distance;
 
@@ -21,6 +22,10 @@ public class Bar {
 
     public Geometry getGeometry() {
         return geometry;
+    }
+
+    public String getVicinity() {
+        return vicinity;
     }
 
     public double getDistance() {
