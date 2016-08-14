@@ -4,7 +4,7 @@ apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "24.0.1"
     defaultConfig {
         applicationId "com.nmp90.idrink"
         minSdkVersion 15
@@ -31,7 +31,6 @@ dependencies {
 
     compile 'com.google.android.gms:play-services-location:9.4.0'
     compile 'com.android.support:appcompat-v7:24.1.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha4'
     compile 'com.android.support:design:24.1.1'
 
     apt "com.google.dagger:dagger-compiler:$rootProject.daggerVersion"
