@@ -61,7 +61,7 @@ public class BarListFragment extends BaseFragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvBars.setLayoutManager(layoutManager);
-        BarsListAdapter adapter = new BarsListAdapter(bars);
+        BarsListAdapter adapter = new BarsListAdapter(getResources(), bars);
         adapter.getPositionClicks().subscribe((bar) -> {
             LatLng barLocation = bar.getGeometry().getLocation();
             String uri = String.format(Locale.ENGLISH, "geo:%f,%f?q=%s", barLocation.getLat(), barLocation.getLng(), Uri.encode(bar.getVicinity()));
@@ -70,7 +70,7 @@ public class BarListFragment extends BaseFragment {
         });
 
         rvBars.setAdapter(adapter);
-        
+
         return view;
     }
 

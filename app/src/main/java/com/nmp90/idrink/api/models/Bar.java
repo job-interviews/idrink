@@ -11,10 +11,10 @@ import org.parceler.Parcel;
 @Parcel
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Bar {
-    private String name;
-    private String vicinity;
-    private Geometry geometry;
-    private double distance;
+    String name;
+    String vicinity;
+    Geometry geometry;
+    double distance;
 
     public String getName() {
         return name;

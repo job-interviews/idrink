@@ -2,4 +2,6 @@
     <string name="app_name">iDrink</string>
     <string name="bar_list">Bar List</string>
     <string name="map">Map</string>
+    <string name="distance">Distance:</string>
+    <string formatted="true" name="bar_distance_format">%.02f km</string>
 </resources>

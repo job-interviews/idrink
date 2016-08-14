@@ -1,5 +1,6 @@
 package com.nmp90.idrink.ui.adapters;
 
+import android.content.res.Resources;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,9 +26,11 @@ public class BarsListAdapter extends RecyclerView.Adapter<BarsListAdapter.ViewHo
 
     private final PublishSubject<Bar> onClickSubject = PublishSubject.create();
     private final List<Bar> bars;
+    private final Resources resources;
 
-    public BarsListAdapter(List<Bar> bars) {
+    public BarsListAdapter(Resources res, List<Bar> bars) {
         this.bars = bars;
+        this.resources = res;
     }
 
     @Override
@@ -40,7 +43,7 @@ public class BarsListAdapter extends RecyclerView.Adapter<BarsListAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         Bar bar = bars.get(position);
         holder.barName.setText(bar.getName());
-        holder.barDistance.setText(String.valueOf(bar.getDistance()));
+        holder.barDistance.setText(String.format( resources.getString(R.string.bar_distance_format), bar.getDistance()));
         holder.container.setOnClickListener(view -> {
             onClickSubject.onNext(bar);
         });
