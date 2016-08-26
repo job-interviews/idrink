@@ -6,4 +6,5 @@
     <string formatted="true" name="bar_distance_format">%.02f km</string>
     <string name="message_location_needed">We need your location to display the bars around you!</string>
     <string name="OK">OK</string>
+    <string name="you_are_not_near_any_bars">You are not near any bars!</string>
 </resources>

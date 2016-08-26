@@ -79,6 +79,7 @@ public class BarsPresenter extends BasePresenter<BarsContract.View> implements B
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(bars -> {
                         if(view.isActive()) {
+
                             List<Bar> results = bars.getResults();
                             if (results == null || results.size() == 0) {
                                 view.displayNoBars();

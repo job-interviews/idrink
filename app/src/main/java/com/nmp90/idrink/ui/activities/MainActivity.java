@@ -16,6 +16,7 @@ import com.nmp90.idrink.mvp.bars.BarsContract;
 import com.nmp90.idrink.ui.adapters.MainPagerAdapter;
 import com.nmp90.idrink.ui.fragments.BarListFragment;
 import com.nmp90.idrink.ui.fragments.BarMapFragment;
+import com.nmp90.idrink.ui.fragments.NoBarsFragment;
 
 import java.util.List;
 
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
 
     @Override
     public void displayNoBars() {
-
+        getSupportFragmentManager().beginTransaction().add(R.id.container, NoBarsFragment.newInstance()).commit();
     }
 
     @Override
