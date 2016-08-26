@@ -90,8 +90,9 @@ public class MainActivity extends BaseActivity implements BarsContract.View {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.READ_CONTACTS)) {
             AlertDialog alertDialog = new AlertDialog.Builder(this)
-                    .setMessage("We need your location to display the bars around you!")
-                    .setPositiveButton("OK", (dialogInterface, i) -> {})
+                    .setMessage(R.string.message_location_needed)
+                    .setPositiveButton(R.string.OK, (dialogInterface, i) -> {
+                    })
                     .create();
             alertDialog.show();
         } else {
