@@ -100,18 +100,18 @@ public class BarMapFragment extends BaseFragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
         this.googleMap = googleMap;
         if(bars != null) {
-            setBarLocationsView();
+            displayBarLocationMarkers();
         }
     }
 
     public void setBars(List<Bar> bars) {
         this.bars = bars;
         if(googleMap != null) {
-            setBarLocationsView();
+            displayBarLocationMarkers();
         }
     }
 
-    private void setBarLocationsView() {
+    private void displayBarLocationMarkers() {
         LatLng firstBarLocation = bars.get(0).getGeometry().getGoogleLocation();
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(firstBarLocation));
